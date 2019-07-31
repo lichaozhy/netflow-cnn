@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "server/index.js",
+  "pkg": {
+    "asset": "."
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --config build/webpack.dev.js"
+    "dev": "webpack-dev-server --config build/webpack.dev.js",
+    "build": "webpack --config build/webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +26,8 @@
   "dependencies": {
     "cap": "^0.2.0",
     "koa": "^2.7.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0"
   },
   "devDependencies": {
     "axios": "^0.19.0",
