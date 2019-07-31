@@ -18,8 +18,8 @@
 					<option :value="512*1024">512 KB</option>
 					<option :value="1024*1024">1 MB</option>
 					<option :value="2*1024*1024">2 MB</option>
-					<option :value="4*1024*1024">4 MB</option>
-					<option :value="8*1024*1024">8 MB</option>
+					<!-- <option :value="4*1024*1024">4 MB</option> -->
+					<!-- <option :value="8*1024*1024">8 MB</option> -->
 					<!-- <option :value="16*1024*1024">16 MB</option> -->
 					<!-- <option :value="32*1024*1024">32 MB</option> -->
 				</b-form-select>
@@ -43,10 +43,26 @@
 		</b-col>
 		<b-col>
 			<b-form-group
-				label="Threshold"
+				:label="`Threshold(${renderer.threshold})`"
 			>
 				<b-form-input
+					type="range"
+					min="0"
+					max="255"
 					v-model="renderer.threshold"
+					size="sm"
+				/>
+			</b-form-group>
+		</b-col>
+		<b-col>
+			<b-form-group
+				:label="`Display(${renderer.display}px)`"
+			>
+				<b-form-input
+					type="range"
+					:min="renderer.side"
+					max="800"
+					v-model="renderer.display"
 					size="sm"
 				/>
 			</b-form-group>
@@ -70,6 +86,9 @@
 			:array="data"
 			:side="renderer.side"
 			:threshold="renderer.threshold"
+			:style="{
+				width: `${renderer.display}px`
+			}"
 		></app-canvas>
 
 		<div style="clear:both"></div>
@@ -95,7 +114,8 @@ export default {
 			data: [],
 			renderer: {
 				side: 128,
-				threshold: 100
+				threshold: 100,
+				display: 128
 			}
 		};
 	},
@@ -113,6 +133,7 @@ export default {
 			});
 
 			this.renderer.side = this.chunk;
+			this.renderer.display = this.chunk;
 		}
 	}
 }
@@ -121,5 +142,6 @@ export default {
 <style>
 #canvas canvas {
 	float: left;
+	width: 600px;
 }
 </style>

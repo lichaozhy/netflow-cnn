@@ -2,15 +2,19 @@ const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const http = require('http');
 const Capture = require('./pacp');
+const fs = require('fs');
+const path = require('path');
+
+const config = JSON.parse(fs.readFileSync(path.resolve('config.json'), 'utf-8'));
 
 const KB = 1024;
 const MB = 1024 * 1024;
-const MAX_LENGTH = 64 * MB;
+const MAX_LENGTH = 2 * MB;
 const store = {
 	buffer: Buffer.alloc(MAX_LENGTH, 0)
 };
 
-const capture = Capture();
+const capture = Capture(config.pcap.device, config.pcap.filter);
 
 capture.on('received', chunk => {
 	const origin = store.buffer;

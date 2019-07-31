@@ -2,11 +2,10 @@ const { Cap, decoders } = require('cap');
 const { PROTOCOL } = decoders;
 const EventEmitter = require('events');
 
-module.exports = function Capture() {
+module.exports = function Capture(deviceName, filter) {
 	const capture = new EventEmitter();
 	const cap = new Cap();
-	const device = Cap.findDevice('192.168.31.212');
-	const filter = 'tcp';
+	const device = Cap.findDevice(deviceName);
 	const bufSize = 10 * 1024 * 1024;
 	const buffer = Buffer.alloc(65535);
 	const linkType = cap.open(device, filter, bufSize, buffer);
